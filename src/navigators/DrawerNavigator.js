@@ -37,6 +37,7 @@ const DefaultDrawerConfig = {
 const DrawerNavigator = (
   routeConfigs: NavigationRouteConfigMap,
   config: DrawerNavigatorConfig,
+  onDrawerAppear: Function,
 ) => {
   const mergedConfig = { ...DefaultDrawerConfig, ...config };
   const {
@@ -58,7 +59,12 @@ const DrawerNavigator = (
           routeConfigs,
           config,
           NavigatorTypes.DRAWER,
-        )((props: *) => <DrawerScreen {...props} />),
+        )((props: *) => {
+          if (onDrawerAppear) {
+            onDrawerAppear();
+          }
+          return <DrawerScreen {...props} />;
+        }),
       },
       DrawerOpen: {
         screen: () => null,
