@@ -33,6 +33,7 @@ export type DrawerViewConfig = {
 
 type Props = DrawerViewConfig & {
   screenProps?: {},
+  disenableGestures: boolean,
   router: NavigationRouter<NavigationState, NavigationAction, NavigationDrawerScreenOptions>,
   navigation: NavigationScreenProp<NavigationState, NavigationAction>,
 };
@@ -128,6 +129,7 @@ export default class DrawerView<T: *> extends PureComponent<void, Props, void> {
         ref={(c: *) => {
           this._drawer = c;
         }}
+        disenableGestures={this.props.disenableGestures}
         drawerWidth={this.props.drawerWidth}
         onDrawerOpen={this._handleDrawerOpen}
         onDrawerClose={this._handleDrawerClose}

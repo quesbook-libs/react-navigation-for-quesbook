@@ -29,10 +29,48 @@ const DefaultDrawerConfig = {
    * https://material.io/guidelines/patterns/navigation-drawer.html
    */
   drawerWidth: Dimensions.get('window').width -
-    (Platform.OS === 'android' ? 56 : 64),
+  (Platform.OS === 'android' ? 56 : 64),
   contentComponent: DrawerItems,
   drawerPosition: 'left',
 };
+
+let disenableGestures = false;
+const disenableGestureListeners = [];
+
+export function setDisenableGestures(input) {
+  disenableGestures = input;
+  disenableGestureListeners.forEach(listener => listener(input));
+}
+
+class ChooseGesturesDrawerView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.listener = disenableGestures => {
+      this.setState({disenableGestures});
+    };
+    this.state = {
+      disenableGestures: disenableGestures,
+    };
+  }
+
+  componentDidMount() {
+    disenableGestureListeners.push(this.listener);
+  }
+
+  componentWillUnmount() {
+    const index = disenableGestureListeners.indexOf(this.listener);
+    if (index !== -1) {
+      disenableGestureListeners.splice(index, 1);
+    }
+  }
+
+  render() {
+    return <DrawerView key={`${this.state.disenableGestures}`}
+                       {...this.props}
+                       disenableGestures={this.state.disenableGestures}/>;
+  }
+}
 
 const DrawerNavigator = (
   routeConfigs: NavigationRouteConfigMap,
@@ -81,7 +119,7 @@ const DrawerNavigator = (
     config,
     NavigatorTypes.DRAWER,
   )((props: *) => (
-    <DrawerView
+    <ChooseGesturesDrawerView
       {...props}
       drawerWidth={drawerWidth}
       contentComponent={contentComponent}
@@ -90,7 +128,9 @@ const DrawerNavigator = (
     />
   ));
 
-  return createNavigationContainer(navigator, containerConfig);
+  const result = createNavigationContainer(navigator, containerConfig);
+  result.setDisenableGestures = setDisenableGestures;
+  return result;
 };
 
 export default DrawerNavigator;
