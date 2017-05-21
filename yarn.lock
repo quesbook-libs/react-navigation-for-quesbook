@@ -3905,21 +3905,9 @@ react-devtools-core@^2.0.8:
     cross-env "^3.1.4"
     ws "^2.0.3"
 
-react-native-dismiss-keyboard@1.0.0:
+react-native-dismiss-keyboard@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
-
-react-native-drawer-layout-polyfill@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-drawer-layout-polyfill/-/react-native-drawer-layout-polyfill-1.2.0.tgz#0d77bd3af8964ffe7fd0f1f6550d6be328a5b567"
-  dependencies:
-    react-native-drawer-layout "1.2.0"
-
-react-native-drawer-layout@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-drawer-layout/-/react-native-drawer-layout-1.2.0.tgz#ae274ee17fadce58d9d7ecef4797d9fad672af74"
-  dependencies:
-    react-native-dismiss-keyboard "1.0.0"
 
 react-native-tab-view@^0.0.61:
   version "0.0.61"
