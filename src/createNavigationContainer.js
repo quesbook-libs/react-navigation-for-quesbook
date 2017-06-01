@@ -29,6 +29,12 @@ type State = {
   nav: ?NavigationState,
 };
 
+let banAndroidBack = false;
+
+export function setBanAndroidBack(value) {
+  banAndroidBack = value;
+}
+
 /**
  * Create an HOC that injects the navigation and manages the navigation state
  * in case it's not passed from above.
@@ -157,8 +163,12 @@ export default function createNavigationContainer<T: *>(
         return;
       }
 
-      this.subs = BackAndroid.addEventListener('backPress', () =>
-        this.dispatch(NavigationActions.back()));
+      this.subs = BackAndroid.addEventListener('backPress', () => {
+        if (!banAndroidBack) {
+          return this.dispatch(NavigationActions.back());
+        }
+        return true;
+      });
 
       Linking.addEventListener('url', ({ url }: { url: string }) => {
         this._handleOpenURL(url);

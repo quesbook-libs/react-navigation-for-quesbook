@@ -86,4 +86,8 @@ module.exports = {
   get withNavigation() {
     return require('./views/withNavigation').default;
   },
+
+  get setBanAndroidBack() {
+    return require('./createNavigationContainer').setBanAndroidBack;
+  }
 };
