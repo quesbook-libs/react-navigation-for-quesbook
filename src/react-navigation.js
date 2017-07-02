@@ -89,5 +89,9 @@ module.exports = {
 
   get setBanAndroidBack() {
     return require('./createNavigationContainer').setBanAndroidBack;
+  },
+
+  get setAndroidBackListener() {
+    return require('./createNavigationContainer').setAndroidBackListener;
   }
 };

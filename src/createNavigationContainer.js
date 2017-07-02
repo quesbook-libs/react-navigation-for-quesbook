@@ -30,9 +30,14 @@ type State = {
 };
 
 let banAndroidBack = false;
+let androidBackListener = null;
 
 export function setBanAndroidBack(value) {
   banAndroidBack = value;
+}
+
+export function setAndroidBackListener(listener) {
+  androidBackListener = listener;
 }
 
 /**
@@ -165,7 +170,16 @@ export default function createNavigationContainer<T: *>(
 
       this.subs = BackAndroid.addEventListener('backPress', () => {
         if (!banAndroidBack) {
-          return this.dispatch(NavigationActions.back());
+          let willDispatch = true;
+          if (androidBackListener && typeof androidBackListener === "function") {
+            const result = androidBackListener();
+            if (result !== undefined && !result) {
+              willDispatch = false;
+            }
+          }
+          if (willDispatch) {
+            return this.dispatch(NavigationActions.back());
+          }
         }
         return true;
       });
